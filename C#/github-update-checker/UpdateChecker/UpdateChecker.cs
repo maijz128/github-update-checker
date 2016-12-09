@@ -62,6 +62,18 @@ namespace Github_Update_Checker
         }
 
 
+        public void HasNewVersion(Action<bool> callback)
+        {
+            CheckUpdate((latest) =>
+            {
+                int result = UpdateChecker.VersionComparer.CompareVersion(latest.tag_name, this.CurrentVersion);
+                callback(result > 0);
+
+            });
+
+        }
+
+
         public Object OpenBrowserToReleases()
         {
             string url = _ReleasesURL;
@@ -170,19 +182,19 @@ namespace Github_Update_Checker
 
             public void DownloadHtml(string url, Action<string> callback)
             {
-                    WebClient webclient = CreateWebClient();
-                    webclient.DownloadStringCompleted += (sender, e)=>
+                WebClient webclient = CreateWebClient();
+                webclient.DownloadStringCompleted += (sender, e) =>
+                {
+                    if (!e.Cancelled && e.Error == null)
                     {
-                        if (!e.Cancelled && e.Error == null)
-                        {
-                            callback(e.Result);
-                        }
-                        else
-                        {
-                            callback( "获取内容失败！");
-                        }
-                    };
-                    webclient.DownloadStringAsync(new Uri(url));
+                        callback(e.Result);
+                    }
+                    else
+                    {
+                        callback("获取内容失败！");
+                    }
+                };
+                webclient.DownloadStringAsync(new Uri(url));
             }
 
 
@@ -191,7 +203,7 @@ namespace Github_Update_Checker
                 WebClient result = new WebClient();
                 result.Headers.Add("User-Agent", UserAgent);
                 result.Encoding = System.Text.Encoding.UTF8;
-               // result.Proxy = new WebProxy("http://127.0.0.1", 1080);
+                // result.Proxy = new WebProxy("http://127.0.0.1", 1080);
                 return result;
             }
 
