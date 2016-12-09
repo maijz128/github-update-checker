@@ -66,11 +66,9 @@ namespace Github_Update_Checker
         {
             CheckUpdate((latest) =>
             {
-                int result = UpdateChecker.VersionComparer.CompareVersion(latest.tag_name, this.CurrentVersion);
+                int result = VersionComparer.CompareVersion(latest.tag_name, this.CurrentVersion);
                 callback(result > 0);
-
             });
-
         }
 
 

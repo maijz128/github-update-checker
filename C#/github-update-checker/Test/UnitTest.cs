@@ -45,17 +45,20 @@ namespace Github_Update_Checker.Tests
             string userOrOrgName = "maijz128";
             string repoName = "github-update-checker";
             string currentVersion = "0.0.1";
-            return new UpdateChecker(userOrOrgName, repoName, currentVersion);
+            UpdateChecker result = new UpdateChecker(userOrOrgName, repoName, currentVersion);
+
+            StubWebClient webclient = new StubWebClient();
+            webclient.DownloadHtmlResult = HTML;
+            result.WebClient = webclient;
+
+            return result;
         }
 
 
         [TestMethod]
         public void TestCheckUpdate1()
         {
-            StubWebClient webclient = new StubWebClient();
-            webclient.DownloadHtmlResult = HTML;
             UpdateChecker checker = GetChecker();
-            checker.WebClient = webclient;
 
             checker.CheckUpdate((version, message) =>
             {
@@ -68,15 +71,27 @@ namespace Github_Update_Checker.Tests
         [TestMethod]
         public void TestCheckUpdate2()
         {
-            StubWebClient webclient = new StubWebClient();
-            webclient.DownloadHtmlResult = HTML;
             UpdateChecker checker = GetChecker();
-            checker.WebClient = webclient;
 
             checker.CheckUpdate((latest) =>
             {
                 Assert.AreEqual(latest.tag_name, "0.0.1");
                 Assert.AreEqual(latest.body, "第一个版本");
+            });
+        }
+
+
+        [TestMethod]
+        public void TestHasNewVersion()
+        {
+            UpdateChecker checker = GetChecker();
+            checker.CurrentVersion = "0.0.0.9";
+
+            checker.HasNewVersion(result => {
+                if (result)
+                {
+                    Assert.IsTrue(result);
+                }
             });
         }
 
