@@ -88,10 +88,7 @@ namespace Github_Update_Checker.Tests
 
             checker.HasNewVersion(result =>
             {
-                if (result)
-                {
-                    Assert.IsTrue(result);
-                }
+                Assert.IsTrue(result);
             });
         }
 
