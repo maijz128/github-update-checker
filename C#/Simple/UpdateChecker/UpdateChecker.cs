@@ -155,9 +155,9 @@ namespace Github_Update_Checker
 
                 try
                 {
-                    string pattern_tag = "\"tag_name\"\\s*:\\s*\"(\\S+)\"\\s*,";
-                    string pattern_name = "\"name\"\\s*:\\s*\"(\\S+)\"\\s*,";
-                    string pattern_body = "\"body\"\\s*:\\s*\"(\\S+)\"\\s*";
+                    string pattern_tag = "\"tag_name\"\\s*:\\s*\"(\\S+?)\"\\s*,";
+                    string pattern_name = "\"name\"\\s*:\\s*\"(\\S+?)\"\\s*,";
+                    string pattern_body = "\"body\"\\s*:\\s*\"(\\S+?)\"\\s*";
 
                     Match match_tag = Regex.Match(html, pattern_tag);
                     Match match_name = Regex.Match(html, pattern_name);
