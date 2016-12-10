@@ -1,0 +1,210 @@
+package com.maijz128.githubupdatechecker;
+
+import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.util.function.*;
+import java.util.regex.*;
+
+
+/****************************************************************
+ *      MaiJZ                                                   *
+ *      20161210                                                *
+ *      https://github.com/maijz128/github-update-checker       *
+ *                                                              *
+ ****************************************************************/
+
+
+public class UpdateChecker {
+
+    public interface IWebClient {
+        void DownloadHtml(String url, Consumer<String> callback);
+    }
+
+    public IWebClient WebClient;
+    public String UserOrOrgName;
+    public String RepoName;
+    public String CurrentVersion;
+
+    private String _UpdateURL = "https://api.github.com/repos/{USER_OR_ORG}/{REPO_NAME}/releases/latest";
+    private String _ReleasesURL = "https://github.com/{USER_OR_ORG}/{REPO_NAME}/releases";
+
+
+    public UpdateChecker(String userOrOrgName, String repoName, String currentVersion) {
+        this.UserOrOrgName = userOrOrgName;
+        this.RepoName = repoName;
+        this.CurrentVersion = currentVersion;
+        this.WebClient = new MyWebClient();
+    }
+
+
+    public void CheckUpdate(BiConsumer<String, String> callback) {
+        this.WebClient.DownloadHtml(GetUpdateURL(), (html) ->
+        {
+            LatestReleases latest = GetLatestReleases(html);
+            callback.accept(latest.tag_name, latest.body);
+        });
+    }
+
+
+    public void CheckUpdate(Consumer<LatestReleases> callback) {
+        this.WebClient.DownloadHtml(GetUpdateURL(), (html) ->
+        {
+            LatestReleases latest = GetLatestReleases(html);
+            callback.accept(latest);
+        });
+    }
+
+
+    public void HasNewVersion(Consumer<Boolean> callback) {
+        CheckUpdate((latest) ->
+        {
+            int result = VersionComparer.CompareVersion(latest.tag_name, this.CurrentVersion);
+            callback.accept(result > 0);
+        });
+    }
+
+
+    public void OpenBrowserToReleases() {
+        String url = _ReleasesURL;
+        url = url.replace("{USER_OR_ORG}", this.UserOrOrgName);
+        url = url.replace("{REPO_NAME}", this.RepoName);
+        URI uri = URI.create(url);
+        try {
+            Desktop.getDesktop().browse(uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public String GetUpdateURL() {
+        String result = _UpdateURL;
+        result = result.replace("{USER_OR_ORG}", this.UserOrOrgName);
+        result = result.replace("{REPO_NAME}", this.RepoName);
+        return result;
+    }
+
+
+    public LatestReleases GetLatestReleases(String html) {
+        LatestReleases result = new LatestReleases();
+
+        try {
+            Pattern pattern_tag = Pattern.compile("\"tag_name\"\\s*:\\s*\"(\\S+?)\"\\s*,");
+            Pattern pattern_name = Pattern.compile("\"name\"\\s*:\\s*\"(\\S+?)\"\\s*,");
+            Pattern pattern_body = Pattern.compile("\"body\"\\s*:\\s*\"(\\S+?)\"\\s*");
+
+            Matcher match_tag = pattern_tag.matcher(html);
+            Matcher match_name = pattern_name.matcher(html);
+            Matcher match_body = pattern_body.matcher(html);
+
+            match_tag.find();
+            match_name.find();
+            match_body.find();
+
+            result.tag_name = match_tag.group(1);
+            result.name = match_name.group(1);
+            result.body = match_body.group(1);
+
+        } catch (Exception e) {
+            result.tag_name = "解析内容错误！";
+            result.name = "解析内容错误！";
+            result.body = "解析内容错误！";
+        }
+
+        return result;
+    }
+
+
+    public static class VersionComparer {
+
+        public static int CompareVersion(String target, String current) {
+            String target_f = Filter(target);
+            String current_f = Filter(current);
+            String[] tsplit = target_f.split("\\.");
+            String[] csplit = current_f.split("\\.");
+            int len = (tsplit.length > csplit.length) ? tsplit.length : csplit.length;
+
+            for (int i = 0; i < len; i++) {
+                int tvalue = 0;
+                int cvalue = 0;
+
+                if (i < tsplit.length) {
+                    tvalue = Integer.parseInt(tsplit[i]);
+                }
+
+                if (i < csplit.length) {
+                    cvalue = Integer.parseInt(csplit[i]);
+                }
+
+                if (tvalue != cvalue) {
+                    return tvalue - cvalue;
+                }
+            }
+            return 0;
+        }
+
+
+        public static String Filter(String version) {
+            StringBuilder sb = new StringBuilder();
+
+            for (char c : version.toCharArray()) {
+                Boolean condition = c >= '0' && c <= '9';
+                if (condition || c == '.') {
+                    sb.append(c);
+                }
+            }
+            return sb.toString();
+        }
+
+    }
+
+
+    public class LatestReleases {
+        public String tag_name;
+        public String name;
+        public String body;
+    }
+
+
+    public class MyWebClient implements IWebClient {
+
+        public void DownloadHtml(String url, Consumer<String> callback) {
+            Thread thread = new Thread(() ->
+            {
+                callback.accept(HttpConnection(url));
+            });
+            thread.start();
+        }
+
+
+        public String HttpConnection(String surl) {
+            try {
+                URL url = new URL(surl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setConnectTimeout(5000);
+
+                if (conn.getResponseCode() == 200) {
+                    InputStream stream = conn.getInputStream();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[1024];
+                    int len = 0;
+                    while ((len = stream.read(buffer)) != (-1)) {
+                        baos.write(buffer, 0, len);
+                    }
+                    return baos.toString();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "{\"name\": \"连接错误\", \"tag_name\": \"连接错误\", \"body\" : \"连接错误\"}";
+        }
+
+    }
+
+}
