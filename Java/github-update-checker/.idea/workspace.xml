@@ -20,6 +20,20 @@
   <component name="FavoritesManager">
     <favorites_list name="github-update-checker" />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="UpdateCheckerTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/com.maijz128.githubupdatechecker/UpdateCheckerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="88" column="50" selection-start-line="88" selection-start-column="50" selection-end-line="88" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
@@ -28,8 +42,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test/com.maijz128.githubupdatechecker/UpdateCheckerTest.java" />
         <option value="$PROJECT_DIR$/src/com/maijz128/githubupdatechecker/UpdateChecker.java" />
+        <option value="$PROJECT_DIR$/test/com.maijz128.githubupdatechecker/UpdateCheckerTest.java" />
       </list>
     </option>
   </component>
@@ -91,6 +105,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="github-update-checker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="github-update-checker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="github-update-checker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com.maijz128.githubupdatechecker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -593,13 +625,12 @@
       <workItem from="1481346265824" duration="343000" />
       <workItem from="1481346815327" duration="22000" />
       <workItem from="1481347364773" duration="17000" />
+      <workItem from="1481398440700" duration="43000" />
+      <workItem from="1481398502138" duration="8000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UpdateCheckerTest - 2016.12.09 at 22h 36m 58s.xml">
-      <configuration name="UpdateCheckerTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="UpdateCheckerTest - 2016.12.09 at 22h 38m 14s.xml">
       <configuration name="UpdateCheckerTest" configurationId="JUnit" />
     </history-entry>
@@ -621,6 +652,9 @@
     <history-entry file="UpdateCheckerTest - 2016.12.10 at 13h 13m 54s.xml">
       <configuration name="UpdateCheckerTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="UpdateCheckerTest - 2016.12.11 at 03h 34m 39s.xml">
+      <configuration name="UpdateCheckerTest" configurationId="JUnit" />
+    </history-entry>
     <history-entry file="UpdateCheckerTest_checkUpdate - 2016.12.09 at 22h 34m 17s.xml">
       <configuration name="UpdateCheckerTest.checkUpdate" configurationId="JUnit" />
     </history-entry>
@@ -629,7 +663,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1109000" />
+    <option name="totallyTimeSpent" value="1160000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="315" y="0" width="1605" height="1032" extended-state="0" />
@@ -684,6 +718,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/test/com.maijz128.githubupdatechecker/UpdateCheckerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/maijz128/githubupdatechecker/UpdateChecker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -693,8 +735,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/com.maijz128.githubupdatechecker/UpdateCheckerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+        <state relative-caret-position="25">
+          <caret line="88" column="50" selection-start-line="88" selection-start-column="50" selection-end-line="88" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1,7 +1,9 @@
 package com.maijz128.githubupdatechecker;
 
 import org.junit.Test;
+
 import java.util.function.*;
+
 import static org.junit.Assert.*;
 
 
@@ -89,9 +91,7 @@ public class UpdateCheckerTest {
         checker.CurrentVersion = "0.0.0.9";
 
         checker.HasNewVersion(result -> {
-            if (result) {
-                assertTrue(result);
-            }
+            assertTrue(result);
         });
     }
 
