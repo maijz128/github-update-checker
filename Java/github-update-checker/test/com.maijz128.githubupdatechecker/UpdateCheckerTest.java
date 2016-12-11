@@ -93,6 +93,11 @@ public class UpdateCheckerTest {
         checker.HasNewVersion(result -> {
             assertTrue(result);
         });
+
+        checker.CurrentVersion = "1.0.0";
+        checker.HasNewVersion(result -> {
+            assertFalse(result);
+        });
     }
 
 
