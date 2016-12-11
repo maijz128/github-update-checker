@@ -91,6 +91,12 @@ namespace Github_Update_Checker.Tests
             {
                 Assert.IsTrue(result);
             });
+
+            checker.CurrentVersion = "1.0.0";
+            checker.HasNewVersion(result =>
+            {
+                Assert.IsFalse(result);
+            });
         }
 
 
