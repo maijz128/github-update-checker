@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github-UpdateChecker</title>
+</head>
+<script type="text/javascript" src="../src/update-checker.js"></script>
+<body>
+<div>
+    <textarea id="text_console" rows="10" cols="30"></textarea>
+</div>
+<button onclick="checkUpdate()">CheckUpdate</button>
+
+<script>
+    function checkUpdate() {
+
+        var userOrOrgName = "maijz128";
+        var repoName = "github-update-checker";
+        var currentVersion = "0.0.1";
+        var checker = UpdateChecker.createNew(userOrOrgName, repoName, currentVersion);
+        checker.hasNewVersion(function (result) {
+            if (result) {
+                checker.openBrowserToReleases();
+            }
+        });
+
+        var console = document.getElementById('text_console');
+        console.innerHTML = '';
+        function writeLine(text) {
+            console.innerHTML += text + '\n';
+        }
+
+        checker.checkUpdate2(function (latest) {
+            writeLine("Name: " + latest.name);
+            writeLine("Tag：" + latest.tag_name);
+            writeLine("说明：\n" + latest.body);
+
+            var result = UpdateChecker.VersionComparer.compareVersion(latest.tag_name, checker.currentVersion);
+            if (result > 0) {
+                writeLine("有新版本。");
+            }
+            else if (result < 0) {
+                writeLine("当前版本为最新。");
+            }
+            else {
+                writeLine("没有新版本。");
+            }
+        });
+    }
+</script>
+</body>
+</html>
