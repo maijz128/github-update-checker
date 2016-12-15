@@ -1,4 +1,4 @@
-﻿using Github_Update_Checker;
+﻿using GithubUpdateChecker;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -13,7 +13,7 @@ using Newtonsoft.Json;
  ****************************************************************/
 
 
-namespace Github_Update_Checker
+namespace GithubUpdateChecker
 {
     public class UpdateChecker
     {

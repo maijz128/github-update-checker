@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace Github_Update_Checker.Tests
+namespace GithubUpdateChecker.Tests
 {
     [TestClass]
     public class UnitTest
