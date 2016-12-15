@@ -7,3 +7,7 @@
 
 ###Github获取仓库最新Release版本号API
 	https://api.github.com/repos/{USER_OR_ORG}/{REPO_NAME}/releases/latest
+	
+
+
+(http://github.com/maijz128/github-update-checker/raw/master/docs/images/Demo.gif)
