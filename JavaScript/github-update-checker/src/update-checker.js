@@ -1,6 +1,6 @@
 /****************************************************************
  *      MaiJZ                                                   *
- *      20161214                                                *
+ *      20170518                                                *
  *      https://github.com/maijz128/github-update-checker       *
  *                                                              *
  ****************************************************************/
@@ -42,10 +42,14 @@ var UpdateChecker = {
         };
 
         checker.openBrowserToReleases = function () {
+            window.open(checker.getReleasesURL());
+        };
+
+        checker.getReleasesURL = function () {
             var url = UpdateChecker.RELEASES_URL;
             url = url.replace("{USER_OR_ORG}", checker.userOrOrgName);
             url = url.replace("{REPO_NAME}", checker.repoName);
-            window.open(url);
+            return url
         };
 
         checker.getUpdateURL = function () {
@@ -56,24 +60,25 @@ var UpdateChecker = {
         };
 
         checker.getLatestReleases = function (html) {
-            return JSON.parse(html);
+            if (html.constructor === 'string') {
+                return JSON.parse(html);
+            } else {
+                return html;
+            }
         };
 
         return checker;
     },
 
     MyWebClient: {
-        //callback(string)
+        //callback(json)
         DownloadHtml: function (url, callback) {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    callback(xmlhttp.responseText);
-                }
-            };
-            xmlhttp.open('GET', url, false);
-            xmlhttp.send();
-        }
+            fetch(url).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                callback(data);
+            });
+        },
     },
 
     VersionComparer: {
@@ -99,7 +104,7 @@ var UpdateChecker = {
                     cvalue = parseInt(csplit[i]);
                 }
 
-                if (tvalue != cvalue) {
+                if (tvalue !== cvalue) {
                     return tvalue - cvalue;
                 }
             }
@@ -112,7 +117,7 @@ var UpdateChecker = {
             for (var i = 0; i < version.length; i++) {
                 var c = version.charAt(i);
                 var condition = c >= '0' && c <= '9';
-                if (condition || c == '.') {
+                if (condition || c === '.') {
                     result += c;
                 }
             }
