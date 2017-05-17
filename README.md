@@ -10,4 +10,4 @@
 	
 
 
-(http://github.com/maijz128/github-update-checker/raw/master/docs/images/Demo.gif)
+![image](https://github.com/maijz128/github-update-checker/raw/master/docs/images/Demo.gif)
