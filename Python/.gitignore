@@ -2,3 +2,4 @@
 *.class
 */__pycache__/
 *.pyc
+.idea/
